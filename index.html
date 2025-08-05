@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Empleados</title>
+</head>
+<body>
+
+<header>
+  Registro de empleados 📋🌲
+</header>
+
+<main>
+  <label for="task-title">Nombre</label>
+  <input type="text" id="task-title" placeholder="Escribe el nombre del empleado">
+
+  <label for="task-desc">Descripción</label>
+  <textarea id="task-desc" rows="3" placeholder="Escribe una breve descripción"></textarea>
+
+  <button id="add-task">Agregar empleado</button>
+
+  <div class="task-list" id="task-list">
+    <p class="empty-message">Aún no has agregado un empleado.</p>
+  </div>
+</main>
+
+<footer>
+  © 2025 Venta de Muebles. Todos los derechos reservados.
+</footer>
+
+<script>
+  const addTaskBtn = document.getElementById('add-task');
+  const taskTitle = document.getElementById('task-title');
+  const taskDesc = document.getElementById('task-desc');
+  const taskList = document.getElementById('task-list');
+
+  document.addEventListener('DOMContentLoaded', loadTasks);
+
+  function saveTasks() {
+    const tasks = [];
+    document.querySelectorAll('.task').forEach(task => {
+      const title = task.querySelector('h3').textContent;
+      const desc = task.querySelector('p').textContent;
+      tasks.push({ title, desc });
+    });
+    localStorage.setItem('empleados', JSON.stringify(tasks));
+  }
+
+  function loadTasks() {
+    const savedTasks = JSON.parse(localStorage.getItem('empleados')) || [];
+    if (savedTasks.length > 0) {
+      taskList.innerHTML = '';
+      savedTasks.forEach(task => {
+        const taskDiv = createTaskElement(task.title, task.desc);
+        taskList.appendChild(taskDiv);
+      });
+    }
+  }
+
+  function createTaskElement(title, desc) {
+    const taskDiv = document.createElement('div');
+    taskDiv.classList.add('task');
+
+    const titleEl = document.createElement('h3');
+    titleEl.textContent = title;
+
+    const descEl = document.createElement('p');
+    descEl.textContent = desc || 'Sin descripción';
+
+    const editBtn = document.createElement('button');
+    editBtn.textContent = 'Editar';
+    editBtn.addEventListener('click', () => {
+      const newTitle = prompt('Editar nombre:', titleEl.textContent);
+      if (newTitle !== null && newTitle.trim() !== '') {
+        titleEl.textContent = newTitle.trim();
+      }
+      const newDesc = prompt('Editar descripción:', descEl.textContent);
+      if (newDesc !== null) {
+        descEl.textContent = newDesc.trim() || 'Sin descripción';
+      }
+      saveTasks();
+    });
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Eliminar';
+    deleteBtn.classList.add('btn-delete');
+    deleteBtn.addEventListener('click', () => {
+      taskDiv.remove();
+      if (taskList.children.length === 0) {
+        showEmptyMessage();
+      }
+      saveTasks();
+    });
+
+    taskDiv.appendChild(titleEl);
+    taskDiv.appendChild(descEl);
+    taskDiv.appendChild(editBtn);
+    taskDiv.appendChild(deleteBtn);
+
+    return taskDiv;
+  }
+
+  function showEmptyMessage() {
+    const emptyMsg = document.createElement('p');
+    emptyMsg.classList.add('empty-message');
+    emptyMsg.textContent = 'Aún no has agregado un empleado.';
+    taskList.appendChild(emptyMsg);
+  }
+
+  addTaskBtn.addEventListener('click', () => {
+    const title = taskTitle.value.trim();
+    const desc = taskDesc.value.trim();
+
+    if (!title) {
+      alert('Por favor, escribe un nombre.');
+      return;
+    }
+
+    const emptyMsg = taskList.querySelector('.empty-message');
+    if (emptyMsg) {
+      emptyMsg.remove();
+    }
+
+    const taskDiv = createTaskElement(title, desc);
+    taskList.appendChild(taskDiv);
+
+    taskTitle.value = '';
+    taskDesc.value = '';
+
+    saveTasks();
+  });
+</script>
+
+</body>
+</html>
