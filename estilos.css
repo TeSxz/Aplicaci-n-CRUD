@@ -1,0 +1,108 @@
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #105f00;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #000000;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+    }
+
+    main {
+      flex: 1;
+      color: white;
+      max-width: 800px;
+      margin: auto;
+      padding: 1rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #058d01;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-right: 0.5rem;
+    }
+
+    button:hover {
+      background-color: #00997d;
+    }
+
+    .btn-delete {
+      background-color: #e74c3c;
+    }
+
+    .btn-delete:hover {
+      background-color: #c0392b;
+    }
+
+    .task-list {
+      margin-top: 1.5rem;
+    }
+
+    .task {
+      background-color: rgb(2, 1, 1);
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .task h3 {
+      margin: 0 0 0.5rem;
+    }
+
+    .task p {
+      margin: 0 0 0.5rem;
+    }
+
+    .empty-message {
+      color: #ccc;
+      text-align: center;
+      font-style: italic;
+      margin-top: 2rem;
+    }
+
+    footer {
+      background-color: #010101;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        font-size: 1.2rem;
+      }
+      button {
+        width: auto;
+        margin-top: 0.3rem;
+      }
+    }
